@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -20,9 +21,30 @@ const SignInPage = () => {
                 <Input placeholder='Password' type='password' />
             </div>
             <Link href='/cms/auth/forgot-password'>
-                <div className='text-zinc-600 text-xs text-right hover:text-blue-700 mb-5'>Forgot password?</div>
+                <div className='text-zinc-600 text-xs text-right hover:text-blue-700 mb-5'>
+                    Forgot password?
+                </div>
             </Link>
-            <Button className='w-full' variant='primary'>Sign In</Button>
+            <Link href='/dashboard'>
+                <Button className='w-full' variant='primary'>
+                    Sign In
+                </Button>
+            </Link>
+            <Button
+                className='w-full mt-3 flex items-center gap-2'
+                variant='outline'>
+                <Image src='/images/google.png' width={24} height={24} alt='' />
+                <div className=''>Sign In with Google</div>
+            </Button>
+
+            <div className='text-sm mt-5 mb-2 text-zinc-600 text-center'>
+                Kamu belum punya akun?{' '}
+                <Link
+                    href='/sign-up'
+                    className='font-semibold hover:text-blue-600'>
+                    Bikin akun sekarang!
+                </Link>
+            </div>
         </div>
     )
 }
