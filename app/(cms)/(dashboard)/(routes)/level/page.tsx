@@ -29,7 +29,7 @@ const LevelPage = () => {
                 Data Level Platform
             </h1>
             {level ? (
-                <DataTable columns={columns} data={level} />
+                <DataTable columns={columns} data={level} onRefresh={getLevel}/>
             ) : (
                 <SkeletonTable />
             )}

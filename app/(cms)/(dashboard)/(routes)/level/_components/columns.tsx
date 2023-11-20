@@ -6,6 +6,18 @@ import { ArrowUpDown, Pencil, Trash } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Level } from '@prisma/client'
 
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
+
 export const columns: ColumnDef<Level>[] = [
     {
         accessorKey: 'name',
@@ -58,14 +70,37 @@ export const columns: ColumnDef<Level>[] = [
 
             return (
                 <div className='flex items-center gap-3'>
-                    <Button
-                        variant='destructive'
-                        size='sm'
-                        className='w-max'
-                        //@ts-ignore
-                        onClick={() => table?.options?.meta?.handleDelete(id)}>
-                        <Trash className='h-4 w-4' />
-                    </Button>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button
+                                variant='destructive'
+                                size='sm'
+                                className='w-max'>
+                                <Trash className='h-4 w-4' />
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Kamu yakin ingin menghapus?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Data yang dihapus tidak bisa dikembalikan
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                    onClick={() =>
+                                        //@ts-ignore
+                                        table?.options?.meta?.handleDelete(id)
+                                    }>
+                                    Continue
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+
                     <Button
                         variant='default'
                         size='sm'

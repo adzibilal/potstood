@@ -27,20 +27,22 @@ import { Input } from '@/components/ui/input'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import AddKategori from './add-kategori'
-import EditKategori from './edit-kategori'
+import AddLevel from './add-level'
+import EditLevel from './edit-level'
 import { Level } from '@prisma/client'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     cabangId?: string
+    onRefresh: () => void
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
-    cabangId
+    cabangId,
+    onRefresh
 }: DataTableProps<TData, TValue>) {
     const router = useRouter()
     const [sorting, setSorting] = React.useState<SortingState>([])
@@ -60,18 +62,18 @@ export function DataTable<TData, TValue>({
     const handleDelete = async (id: string) => {
         toast.loading('Loading...')
         try {
-            await axios.delete(`/api/kategori/${id}`)
-            toast.success('Kategori berhasil dihapus')
+            await axios.delete(`/api/level/${id}`)
+            toast.dismiss()
+            toast.success('Level berhasil dihapus')
+            router.refresh()
+            onRefresh()
         } catch (error) {
             console.log(error)
-            toast.error('Kategori gagal dihapus')
-        } finally {
-            setTimeout(() => {
-                toast.dismiss()
-            }, 1000)
-            router.refresh()
+            toast.dismiss()
+            toast.error('Level gagal dihapus')
         }
     }
+
     const handleEdit = (level: Level) => {
         setDataEdit(level)
         setIsEditing(true)
@@ -120,14 +122,20 @@ export function DataTable<TData, TValue>({
                             setIsAdding(!isAdding)
                         }}>
                         <PlusCircle className='h-4 w-4 mr-2' />
-                        Tambah Kategori
+                        Tambah Level
                     </Button>
                 </div>
-                {isAdding && <AddKategori onClose={() => setIsAdding(false)} />}
+                {isAdding && (
+                    <AddLevel
+                        onClose={() => setIsAdding(false)}
+                        onRefresh={onRefresh}
+                    />
+                )}
                 {isEditing && (
-                    <EditKategori
+                    <EditLevel
                         initialData={dataEdit}
                         onClose={() => setIsEditing(false)}
+                        onRefresh={onRefresh}
                     />
                 )}
             </div>

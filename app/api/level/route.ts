@@ -15,3 +15,20 @@ export async function GET(req: Request) {
         return new NextResponse(`'Internal Error' - ${error}`, { status: 500 })
     }
 }
+
+export async function POST(req: Request) {
+    try {
+        const values = await req.json()
+
+        const level = await db.level.create({
+            data: {
+                ...values
+            }
+        })
+
+        return NextResponse.json(level)
+    } catch (error) {
+        console.log('[POST LEVEL]', error)
+        return new NextResponse(`'Internal Error' - ${error}`, { status: 500 })
+    }
+}

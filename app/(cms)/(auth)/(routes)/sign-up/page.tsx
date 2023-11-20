@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import GoogleButton from '../../_components/goggle-button'
 
 const SignUpPage = () => {
     return (
@@ -12,17 +13,12 @@ const SignUpPage = () => {
                 Please provide your details.
             </div>
 
-            <Button
-                className='w-full mt-3 flex items-center gap-2 mb-5'
-                variant='outline'>
-                <Image src='/images/google.png' width={24} height={24} alt='' />
-                <div className=''>Sign In with Google</div>
-            </Button>
+            <GoogleButton />
 
-            <div className='flex items-center gap-3 text-zinc-400 mb-3'>
-                <div className="h-[1px] w-full bg-zinc-200"></div>
+            <div className='flex items-center gap-3 text-zinc-400 mb-3 mt-5'>
+                <div className='h-[1px] w-full bg-zinc-200'></div>
                 <div className='text-sm'>OR</div>
-                <div className="h-[1px] w-full bg-zinc-200"></div>
+                <div className='h-[1px] w-full bg-zinc-200'></div>
             </div>
 
             <div className='form-control mb-3'>
